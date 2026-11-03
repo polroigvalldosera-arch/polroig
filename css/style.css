@@ -1,0 +1,323 @@
+/* polroig — fons negre, sans, una columna. Refes: REFE.jpg + "refe hover color".
+   L'HTML el genera build/paginas.mjs; aquí només l'aspecte. */
+
+:root {
+  --bg: #000;
+  --fg: #fff;
+  --rosa: #ff95ca;                       /* el rosa del mockup */
+  --marge: clamp(16px, 3vw, 48px);
+  /* --u: la unitat de la maqueta (espais, columna, ninots); creix amb la pantalla.
+     --fs: la lletra, petita i igual a tot arreu (refe: ellenole.com). */
+  --u: clamp(16px, 1.45vw, 30px);
+  --fs: 12px;
+  --col: calc(var(--u) * 62);            /* amplada màxima de la columna */
+  --hn: calc(var(--u) * 1.98);           /* alçada d'un ninot (el llenç: 1,24 adults, veure README) */
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  padding: 0 var(--marge) calc(var(--u) * 3);
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 var(--fs)/1.3 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a, button {
+  color: inherit;
+  font: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+a:hover, button:hover { color: var(--rosa); }
+:focus-visible { outline: 1px solid var(--rosa); outline-offset: 3px; }
+.mes, .text a, .desplegable p a, .pagina-bio p a { text-decoration: underline; text-underline-offset: .15em; text-decoration-thickness: 1px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+em { font-style: italic; }
+
+p { margin: 0; }
+img, video { display: block; max-width: 100%; }
+
+/* ---------- capçalera ---------- */
+/* Les mateixes columnes que l'índex: el correu, a sobre dels detalls rosa. */
+.top {
+  display: grid;
+  grid-template-columns: 22em 1fr auto;
+  gap: .4em 1em;
+  max-width: var(--col);                 /* cat · eng, alineat amb la columna i no a la vora de la pantalla */
+  padding: calc(var(--u) * 1.6) 0 calc(var(--u) * 1.4);
+}
+/* "Pol Roig" i els idiomes es queden a dalt en fer scroll, sense fons (refe: albertrieragalceran.com);
+   el correu, no. Fixos al mateix lloc on serien (els idiomes, a la vora de la columna);
+   per sobre de l'entrada (z 10). */
+.top > a:first-child, .top .idiomes { position: fixed; top: calc(var(--u) * 1.6); z-index: 11; }
+.top > a:first-child { left: var(--marge); }
+.top .idiomes { right: calc(100% - var(--marge) - min(var(--col), 100% - 2 * var(--marge))); }
+.top > a:nth-child(2) { grid-column: 2; }
+.top a[aria-current] { color: var(--rosa); }   /* l'idioma on ets, en rosa */
+
+/* ---------- línia de punts + siluetes ---------- */
+.passeig {
+  display: flex;
+  align-items: flex-end;
+  max-width: var(--col);
+  margin: calc(var(--u) * 2) 0 calc(var(--u) * 1.2);
+}
+.passeig .punts {
+  width: var(--w);
+  height: .2em;
+  margin-bottom: .05em;
+  background: radial-gradient(circle, var(--fg) 0 .07em, transparent .085em) left center / .42em .2em repeat-x;
+}
+.passeig .ninot { position: relative; flex-shrink: 0; }
+.passeig img { height: var(--hn); width: auto; }
+/* En passar-hi per sobre, rosa: el mateix dibuix fet màscara, pintat a sobre. */
+.passeig .ninot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--rosa);
+  -webkit-mask: var(--m) center / contain no-repeat;
+  mask: var(--m) center / contain no-repeat;
+  opacity: 0;
+  transition: opacity .2s;
+}
+.passeig .ninot:hover::after { opacity: 1; }
+/* L'aspiradora: una mica més gran, i més avall perquè els peus (no l'aspiradora) toquin la línia.
+   Un SVG no pot sortir per sota de la seva caixa: per això aquí i no al dibuix. */
+.passeig .ninot[data-figure="concierto-barroco-aspiradora"] { top: calc(var(--hn) * .12); }
+.passeig .ninot[data-figure="concierto-barroco-aspiradora"] img { height: calc(var(--hn) * 1.1); }
+
+/* ---------- bio ---------- */
+.bio { max-width: 60em; }              /* a 11px, una línia de lectura còmoda */
+.pagina-bio > img { width: min(100%, calc(82vh * var(--r, 1.5))); height: auto; margin-bottom: 2em; }   /* com les fotos dels projectes (.slides) */
+.pagina-bio p, .text p { max-width: 38em; margin-bottom: 1em; }
+.contacte-bio { margin: 2em 0; }
+.contacte-bio h2 { font: inherit; margin: 0 0 1em; }
+.contacte-bio p { margin-bottom: 0; }
+/* la firma de l'estudi: petita i grisa, sota el "tornar" (com a almarbra, només a la bio) */
+.pagina-bio .credit { margin: 3em 0 0; font-size: 11px; color: #888; }
+.pagina-bio .credit a { text-decoration: none; }
+
+/* ---------- índex de projectes ---------- */
+.index { margin-top: calc(var(--u) * 3); }
+.index h2 { font: inherit; margin: 0 0 1.3em; }
+.index ul { list-style: none; margin: 0; padding: 0; line-height: 1.45; }
+.index a { display: grid; grid-template-columns: 22em 1fr; gap: 0 1em; }
+.index a:hover { color: inherit; }
+.index .titol { font-style: italic; width: fit-content; }
+.index a:hover .titol { text-decoration: underline; text-underline-offset: .15em; text-decoration-thickness: 1px; }
+.index .detall { color: var(--rosa); }
+/* Amb ratolí, el rosa s'encén sencer (les dues llistes alhora) només amb el cursor a sobre d'un títol. */
+@media (hover: hover) {
+  .index .detall { opacity: 0; transition: opacity .2s; }
+  main:has(.index a:hover) .index .detall { opacity: 1; }
+}
+
+/* ---------- projectes ---------- */
+.feed { margin-top: calc(var(--u) * 7); }
+.proj { max-width: var(--col); margin-bottom: calc(var(--u) * 3); scroll-margin-top: calc(var(--u) * 3 + 2em); }   /* sota la capçalera */
+.peu { margin-top: .6em; max-width: 60em; }
+
+/* "llegir més": sempre a la seva línia i a mida de text, perquè es vegi que porta a alguna banda */
+.bio .mes, .peu .mes { display: block; width: fit-content; margin-top: .6em; }
+
+/* "llegir més" dels projectes sense pàgina: es desplega aquí mateix */
+.desplegable { max-width: 38em; margin-top: .6em; }
+.desplegable summary { list-style: none; cursor: pointer; text-decoration: underline; text-underline-offset: .15em; text-decoration-thickness: 1px; width: fit-content; }
+.desplegable summary::-webkit-details-marker { display: none; }
+.desplegable summary:hover { color: var(--rosa); }
+.desplegable .tancar, .desplegable[open] .obrir { display: none; }
+.desplegable[open] .tancar { display: inline; }
+.desplegable p { margin: 1em 0 0; }
+
+/* ---------- slideshow ---------- */
+.slides {
+  position: relative;
+  margin: 0;
+  aspect-ratio: var(--r, 3 / 2);
+  width: min(100%, calc(82vh * var(--r, 1.5)));
+}
+.slides img { width: 100%; height: 100%; object-fit: contain; transition: opacity .4s; }
+
+/* Mentre la foto carrega (el JS posa .carregant): la línia de punts creix i el ninot camina
+   davant, com les línies de la pàgina. El dibuix és assets/siluetes/walk.svg. */
+.slides.carregant img { opacity: 0; }
+.slides.carregant::before,
+.slides.carregant::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  pointer-events: none;
+  animation: 2.6s linear infinite;
+}
+.slides.carregant::before {                          /* els punts, als peus del ninot */
+  height: .2em;
+  margin-top: calc(var(--hn) / 2 - .2em);
+  background: radial-gradient(circle, var(--fg) 0 .07em, transparent .085em) left center / .42em .2em repeat-x;
+  animation-name: punts;
+}
+.slides.carregant::after {                           /* el ninot */
+  height: var(--hn);
+  aspect-ratio: 198 / 647;
+  margin-top: calc(var(--hn) / -2);
+  background: url(../assets/siluetes/walk.svg) center / contain no-repeat;
+  animation-name: ninot;
+}
+@keyframes punts { from { width: 0; } to { width: 60%; } }
+@keyframes ninot { from { left: 0; } to { left: 60%; } }
+.slides [hidden] { display: none; }
+.slides button {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+}
+.slides .ant { left: 0; cursor: w-resize; }
+.slides .seg { right: 0; cursor: e-resize; }
+/* El triangle: hi ha més fotos, clica per passar. Equilàter, a mitja alçada, a la vora del botó:
+   el de la dreta (següent) mira a la dreta; el de l'esquerra (anterior), a l'esquerra.
+   Amb ratolí, només surt el de la meitat on és el cursor. Sense (mòbil), tots dos una estona quan
+   la foto entra a la pantalla i a cada toc, i s'esvaeixen (el JS posa i treu .avis). */
+.slides button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  width: .7em;
+  height: calc(.7em / .866);
+  background: #fff;
+  mix-blend-mode: difference;
+  transition: opacity .2s;
+}
+.slides .seg::after { right: .7em; clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.slides .ant::after { left: .7em; clip-path: polygon(100% 0, 0 50%, 100% 100%); }
+@media (hover: hover) {
+  .slides button::after { opacity: 0; }
+  .slides button:hover::after { opacity: 1; }
+}
+@media (hover: none) {
+  .slides button::after { opacity: 0; transition: opacity .8s; }
+  .slides.avis button::after { opacity: 1; transition: none; }
+}
+.galeria { margin-bottom: 4em; }
+.galeria h2 { font: inherit; margin: 0 0 .8em; }
+
+/* ---------- pàgina sencera ---------- */
+/* Les pàgines de projecte, en blanc (body.blanc): els ninots, negres; el rosa, més fosc per llegir-se. */
+.blanc { --bg: #fff; --fg: #000; --rosa: #c0407f; }
+.blanc .passeig img, .blanc .slides.carregant::after { filter: invert(1); }
+.cartells { display: grid; grid-template-columns: repeat(auto-fit, minmax(14em, 1fr)); gap: 1em; max-width: var(--col); align-items: start; }
+.cartells img { width: 100%; height: auto; }
+
+.pagina video { width: min(100%, var(--col)); height: auto; background: #111; margin: 3em 0; }
+.pagina .text { margin: 3em 0 5em; }
+/* Dins del text d'una pàgina: cites en rosa, slideshows i vídeo amb el seu peu, crèdits a dues columnes. */
+.cita { margin: 2em 0; color: var(--rosa); }
+.cita p { max-width: 38em; }
+.text a { color: var(--rosa); }
+.text .bloc { margin: 3em 0; }
+.text .bloc video { margin: 0; }
+.columnes { columns: 2; column-gap: 2em; max-width: var(--col); margin: 1em 0 3em; }
+.columnes p { break-inside: avoid; max-width: none; }
+
+/* ---------- l'entrada (abans de la home) ----------
+   Una foto a pantalla completa amb la capçalera a sobre. Les línies de punts s'escriuen cap a
+   la dreta a salts, com lletres, i el ninot fa de cursor: s'atura i parpelleja, i continua. */
+.entrada { display: none; }
+html.amb-entrada { overflow: hidden; }
+html.amb-entrada .top > :not(:first-child) { visibility: hidden; }   /* a l'entrada, només "Pol Roig" */
+html.amb-entrada .entrada {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: #000;
+  cursor: pointer;
+  transition: opacity .4s;
+}
+.entrada.fora { opacity: 0; pointer-events: none; }
+.entrada > img { width: 100%; height: 100%; object-fit: cover; }
+.escriptura { position: absolute; left: var(--marge); right: var(--marge); top: 50%; transform: translateY(-50%); }
+.escriptura .passeig { margin: calc(var(--u) * 1.2) 0; }
+/* Una volta (--volta, de site.json → entrance → cycle; 14 s): escriu (35 %), parpelleja (fins al 55 %),
+   escriu (fins al 90 %) i parpelleja. El cursor s'encén i s'apaga cada 2 % (0,28 s a 14 s).
+   Cada línia va un terç de volta desfasada. */
+.escriptura .punts { width: 0; animation: escriure var(--volta, 14s) steps(30, end) infinite; animation-delay: calc(var(--k) * var(--volta, 14s) * -.33); }
+.escriptura img { animation: cursor var(--volta, 14s) step-end infinite; animation-delay: calc(var(--k) * var(--volta, 14s) * -.33); }
+@keyframes escriure { 0% { width: 0; } 35%, 55% { width: 35%; } 90%, 100% { width: 70%; } }
+@keyframes cursor {
+  0%, 35% { opacity: 1; } 37% { opacity: 0; } 39% { opacity: 1; } 41% { opacity: 0; } 43% { opacity: 1; }
+  45% { opacity: 0; } 47% { opacity: 1; } 49% { opacity: 0; } 51% { opacity: 1; } 53% { opacity: 0; } 55%, 90% { opacity: 1; }
+  92% { opacity: 0; } 94% { opacity: 1; } 96% { opacity: 0; } 98% { opacity: 1; }
+}
+/* Processó (dos ninots a la línia): el primer escriu el primer tram i s'hi queda; el segon
+   apareix al final i escriu el segon tram. */
+.escriptura .processo .punts { animation-name: escriure-1; }
+.escriptura .processo .punts ~ .punts { animation-name: escriure-2; }
+.escriptura .processo img { animation-name: cursor-1; }
+.escriptura .processo img ~ img { animation-name: cursor-2; }
+@keyframes escriure-1 { 0% { width: 0; } 35%, 100% { width: 35%; } }
+@keyframes escriure-2 { 0%, 55% { width: 0; } 90%, 100% { width: 35%; } }
+@keyframes cursor-1 {
+  0%, 35% { opacity: 1; } 37% { opacity: 0; } 39% { opacity: 1; } 41% { opacity: 0; } 43% { opacity: 1; }
+  45% { opacity: 0; } 47% { opacity: 1; } 49% { opacity: 0; } 51% { opacity: 1; } 53% { opacity: 0; } 55%, 100% { opacity: 1; }
+}
+@keyframes cursor-2 {
+  0% { opacity: 0; } 55%, 90% { opacity: 1; }
+  92% { opacity: 0; } 94% { opacity: 1; } 96% { opacity: 0; } 98% { opacity: 1; }
+}
+
+/* ---------- el loader de la transició (css/transicion.css) ----------
+   El dibuix de l'entrada, sobre negre: una línia de punts que s'escriu amb el ninot de cursor.
+   Tot en un sol pseudoelement: els punts (fins al ninot, content-box) i el ninot a la dreta;
+   el cursor parpelleja amagant la capa del ninot. */
+.tapada body::after,
+.cargando body::after {
+  --an: calc(var(--hn) * 324 / 647);    /* l'amplada del ninot (walk2.svg) */
+  left: var(--marge);
+  translate: 0 -50%;
+  width: var(--an);
+  height: var(--hn);
+  padding-right: var(--an);
+  box-sizing: border-box;
+  background:
+    url(../assets/siluetes/walk2.svg) right bottom / auto 100% no-repeat border-box,
+    radial-gradient(circle, #fff 0 .07em, transparent .085em) left bottom .05em / .42em .2em repeat-x content-box;
+  background-clip: border-box, content-box;
+}
+.tapada .blanc::after, .cargando .blanc::after { filter: invert(1); }   /* a les pàgines blanques, en negre */
+:root { --carga-anim: escriure-carga 7s steps(30, end) .5s infinite both, cursor-carga 7s step-end .5s infinite; }
+@keyframes escriure-carga {
+  0% { width: var(--an); }
+  35%, 55% { width: calc(var(--an) + (100vw - 2 * var(--marge)) * .35); }
+  90%, 100% { width: calc(var(--an) + (100vw - 2 * var(--marge)) * .7); }
+}
+@keyframes cursor-carga {
+  0%, 35% { background-size: auto 100%, .42em .2em; } 39% { background-size: 0 0, .42em .2em; }
+  43% { background-size: auto 100%, .42em .2em; } 47% { background-size: 0 0, .42em .2em; }
+  51%, 90% { background-size: auto 100%, .42em .2em; } 93% { background-size: 0 0, .42em .2em; }
+  96% { background-size: auto 100%, .42em .2em; } 99% { background-size: 0 0, .42em .2em; }
+}
+
+/* ---------- peu: contacte ---------- */
+.contacte { display: flex; flex-wrap: wrap; gap: .4em 1.6em; max-width: var(--col); margin-top: calc(var(--u) * 4); }
+
+@media (max-width: 700px) {
+  :root { --hn: calc(var(--u) * 1.75); }
+  .top { grid-template-columns: 1fr auto 1fr; }   /* el correu al mig, els idiomes a la dreta */
+  .index a { grid-template-columns: 1fr; }
+  :root { --fs: 13px; }                  /* al mòbil, un punt més: 12px es fa petit a la mà */
+  .index li { margin-bottom: .5em; }
+  .index .detall { display: none; }      /* al mòbil, sense el rosa */
+  .feed { margin-top: calc(var(--u) * 4); }
+  .columnes { columns: 1; }
+}
