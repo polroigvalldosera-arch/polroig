@@ -3,9 +3,14 @@
   "title": "Pol Roig Valldosera",
   "short": "Pol Roig",
   "url": "https://polroigvalldosera.com",
-  "langs": ["en", "ca"],
+  "langs": [
+    "en",
+    "ca"
+  ],
   "email": "info@polroigvalldosera.com",
-  "social": { "instagram": "pol.roig" },
+  "social": {
+    "instagram": "pol.roig"
+  },
   "description": {
     "ca": "Pol Roig Valldosera (Barcelona, 2000), escenògraf i director escènic: escenografia, il·luminació, instal·lació i peces escèniques pròpies.",
     "en": "Pol Roig Valldosera (Barcelona, 2000), set designer and stage director: scenography, lighting, installation and his own stage works."
@@ -15,18 +20,46 @@
     "en": "Pol Roig Valldosera (Barcelona, 2000) works as a set designer and stage director. His practice extends beyond the performing arts, exploring the intersections between spatial design, live music, visual arts, and installation. He has presented his projects at venues and institutions including Gran Teatre del Liceu, Sala Beckett, L’Auditori, Mercat de les Flors, and Festival Grec."
   },
   "entrance": {
-    "photos": ["1", "2", "3", "4", "5", "6", "7"],
-    "mobile": ["1", "2", "3", "4", "5", "6", "7", "8"],
+    "photos": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    "mobile": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
     "seconds": 20,
     "cycle": 14
   },
   "lists": {
     "works": {
-      "name": { "ca": "Obres", "en": "Works" },
-      "projects": ["concierto-barroco", "passacaglia", "eliza", "ofrena-musical"]
+      "name": {
+        "ca": "Obres",
+        "en": "Works"
+      },
+      "projects": [
+        "concierto-barroco",
+        "passacaglia",
+        "eliza",
+        "ofrena-musical"
+      ]
     },
     "scenography": {
-      "name": { "ca": "Escenografies", "en": "Selected Scenography" },
+      "name": {
+        "ca": "Escenografies",
+        "en": "Selected Scenography"
+      },
       "projects": [
         "els-encantats",
         "pura-passio",
@@ -38,6 +71,7 @@
         "quiso-negro",
         "requiem",
         "damoridemort",
+        "proyecto-nuevo",
         "el-que-es-nostre",
         "mes"
       ]
@@ -46,6 +80,7 @@
   "feed": [
     "els-encantats",
     "pura-passio",
+    "proyecto-nuevo",
     "concierto-barroco",
     "dejos-deth-bosc",
     "expulsio",
