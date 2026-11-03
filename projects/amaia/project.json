@@ -1,0 +1,33 @@
+{
+  "$schema": "../../schema/project.json",
+  "title": "Amaia",
+  "label": {
+    "ca": "Amaia",
+    "en": "Amaia"
+  },
+  "detail": {
+    "ca": "(Escenografia, Teatro Eslava, 2026)",
+    "en": "(Scenography, Teatro Eslava, 2026)"
+  },
+  "caption": {
+    "ca": [
+      "*Escenografia per un concert d'Amaia.*.",
+      "Direcció creativa: Daniel 200 / Construcció: Pigmento Studio)"
+    ],
+    "en": [
+      "*Desplaçats*. Installation based on a silk blouse made by Mercè Rodoreda, for the exhibition *Displaced. Rodoreda and Fenosa. Solidarity and Resilience in a Timeless Loop* at the Apel·les Fenosa Museum, 2026.",
+      "(Artist: Pol Roig / Curator: Nekane Aramburu)"
+    ]
+  },
+  "photos": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9"
+  ]
+}
